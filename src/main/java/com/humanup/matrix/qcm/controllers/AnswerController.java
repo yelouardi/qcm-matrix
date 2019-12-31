@@ -25,7 +25,7 @@ public class AnswerController {
         if(findAnswer.isPresent()){
             return ResponseEntity.status(HttpStatus.FOUND).body("this answer is founded");
         }
-        answerBS.createAnswer(answer);
+      //  answerBS.createAnswer(answer);
         return ResponseEntity.status(HttpStatus.CREATED).body(answer);
     }
 
