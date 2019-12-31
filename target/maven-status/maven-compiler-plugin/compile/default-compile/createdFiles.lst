@@ -1,0 +1,14 @@
+com\humanup\matrix\qcm\vo\QuestionVO.class
+com\humanup\matrix\qcm\vo\ChoiceVO$Builder.class
+com\humanup\matrix\qcm\dao\entities\Answer.class
+com\humanup\matrix\qcm\dao\AnswerDAO.class
+com\humanup\matrix\qcm\dao\ChoiceDAO.class
+com\humanup\matrix\qcm\dao\QuestionDAO.class
+com\humanup\matrix\qcm\vo\QuestionVO$Builder.class
+com\humanup\matrix\qcm\vo\ChoiceVO.class
+com\humanup\matrix\qcm\vo\AnswerVO$Builder.class
+com\humanup\matrix\qcm\QcmMatrixApplication.class
+com\humanup\matrix\qcm\dao\entities\Answer$Builder.class
+com\humanup\matrix\qcm\dao\entities\Question.class
+com\humanup\matrix\qcm\vo\AnswerVO.class
+com\humanup\matrix\qcm\dao\entities\Choice.class
