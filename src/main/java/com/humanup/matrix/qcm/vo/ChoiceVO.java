@@ -1,35 +1,35 @@
 package com.humanup.matrix.qcm.vo;
 
 public class ChoiceVO {
-    private String choice;
+    private String choiceText;
     private int percentage;
     private String question;
 
     public ChoiceVO() {
     }
 
-    public ChoiceVO(String choice, int percentage, String question) {
-        this.choice = choice;
+    public ChoiceVO(String choiceText, int percentage, String question) {
+        this.choiceText = choiceText;
         this.percentage = percentage;
         this.question = question;
     }
 
-    public String getChoice() {
-        return choice;
+    public String getChoiceText() {
+        return choiceText;
     }
     public int getPercentage(){return percentage;}
     public String getQuestion(){return question;}
 
     public static class Builder {
-        private String choice;
+        private String choiceText;
         private int percentage;
         private String question;
 
         public Builder() {
         }
 
-        public Builder setChoice(String choice) {
-            this.choice = choice;
+        public Builder setChoiceText(String choiceText) {
+            this.choiceText = choiceText;
             return this;
         }
         public Builder setPercentage(int percentage){
@@ -42,7 +42,7 @@ public class ChoiceVO {
         }
 
         public ChoiceVO build() {
-            return new ChoiceVO(choice, percentage,question);
+            return new ChoiceVO(choiceText, percentage,question);
         }
     }
 }

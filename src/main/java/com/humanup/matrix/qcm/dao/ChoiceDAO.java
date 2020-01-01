@@ -1,13 +1,15 @@
 package com.humanup.matrix.qcm.dao;
 
 import com.humanup.matrix.qcm.dao.entities.Choice;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface ChoiceDAO {
-    Choice findByChoice(String Choice);
+public interface ChoiceDAO extends CrudRepository<Choice, Long> {
+    Choice findByChoiceText(String choice);
     List<Choice> findAll();
     Choice findById(long id);
-    // @Query("SELECT q FROM Choice q WHERE lower() like %:Choice% ")
-    // List<Choice> findListProfilesByProfileTitle(String Choice);
+    @Query("SELECT c FROM Choice c WHERE lower(c.question.questionId) like %:questionId% ")
+    List<Choice> findChoiceByQuestionId(int questionId);
 }

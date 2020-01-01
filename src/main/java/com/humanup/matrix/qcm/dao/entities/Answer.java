@@ -5,42 +5,41 @@ import javax.persistence.*;
 
 @Entity
 public class Answer {
-    private String choice;
-    //private Person person;
-    private String person;
+    private Choice choice;
+    private String emailPerson;
 
-    public Answer(String choice, String person) {
+    public Answer(Choice choice, String emailPerson) {
         this.choice = choice;
-        this.person = person;
+        this.emailPerson = emailPerson;
     }
 
     public Answer() {
     }
 
-    public String getChoice() {
+    public Choice getChoice() {
         return choice;
     }
 
-    public String getPerson() {
-        return person;
+    public String getEmailPerson() {
+        return emailPerson;
     }
 
     public static class Builder{
-        private String choice;
-        private String person;
+        private Choice choice;
+        private String emailPerson;
 
         public Builder(){
         }
 
-        public Answer.Builder setChoice(String choice){
+        public Answer.Builder setChoice(Choice choice){
             this.choice = choice;
             return this;
         }
 
-        public Answer.Builder setPeron(String person){
-            this.person = person;
+        public Answer.Builder setEmailPerson(String emailPerson){
+            this.emailPerson = emailPerson;
             return this;
         }
-        public Answer build(){ return new Answer(choice, person);}
+        public Answer build(){ return new Answer(choice, emailPerson);}
     }
 }

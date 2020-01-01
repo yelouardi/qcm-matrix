@@ -1,9 +1,6 @@
 package com.humanup.matrix.qcm.dao.entities;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 public class Choice {
 
@@ -11,29 +8,36 @@ public class Choice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
-    private String choice;
-    private String percentage;
+    private String choiceText;
+    private int percentage;
+
+    @ManyToOne
+    @JoinColumn(name = "questionId")
+    private Question question;
 
     public Choice() {
     }
 
-    public Choice(String choice, String percentage) {
-        this.choice = choice;
+    public Choice(String choiceText, int percentage,Question question) {
+        this.choiceText = choiceText;
         this.percentage = percentage;
+        this.question = question;
     }
 
     public Long getId() {
         return id;
     }
-    public String getChoice() {
-        return choice;
+    public String getChoiceText() {
+        return choiceText;
     }
-    public String getpercentage() { return percentage; }
+    public int getPercentage() { return percentage; }
+    public Question getQuestion() { return question; }
 
     public static class Builder{
         private Long id;
-        private String choice;
-        private String percentage;
+        private String choiceText;
+        private int percentage;
+        private Question question;
 
         public Builder(){
         }
@@ -43,16 +47,21 @@ public class Choice {
             return this;
         }
 
-        public Builder setChoice(String choice){
-            this.choice = choice;
+        public Builder setChoiceText(String choiceText){
+            this.choiceText = choiceText;
             return this;
         }
 
-        public Builder setPercentage(String percentage){
+        public Builder setPercentage(int percentage){
             this.percentage = percentage;
             return this;
         }
 
-        public Choice build(){return new Choice(choice, percentage);}
+        public Builder setQuestion(Question question){
+            this.question = question;
+            return this;
+        }
+
+        public Choice build(){return new Choice(choiceText, percentage, question);}
     }
 }

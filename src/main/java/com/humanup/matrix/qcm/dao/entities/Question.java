@@ -11,17 +11,17 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
-    private String question;
+    private String questionText;
 
-    public Question(String question) {
-        this.question = question;
+    public Question(String questionText) {
+        this.questionText = questionText;
     }
 
     public Question() {
     }
 
-    public String getQuestion() {
-        return question;
+    public String getQuestionText() {
+        return questionText;
     }
 
     public Long getId() {
@@ -31,13 +31,13 @@ public class Question {
 
     public static class Builder{
         private Long id;
-        private String question;
+        private String questionText;
 
         public Builder(){
         }
 
-        public Builder setQuestion(String question) {
-            this.question = question;
+        public Builder setQuestionText(String questionText) {
+            this.questionText = questionText;
             return this;
         }
 
@@ -46,7 +46,7 @@ public class Question {
             return this;
         }
 
-        public Question build(){return new Question(question);}
+        public Question build(){return new Question(questionText);}
     }
 
 }
