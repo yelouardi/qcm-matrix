@@ -1,19 +1,19 @@
 package com.humanup.matrix.qcm.vo;
 
 public class AnswerVO {
-    private String choiceText;
+    private int choiceId;
     private String emailPerson;
 
-    public AnswerVO(String choiceText, String emailPerson) {
-        this.choiceText = choiceText;
+    public AnswerVO(int choiceId, String emailPerson) {
+        this.choiceId = choiceId;
         this.emailPerson = emailPerson;
     }
 
     public AnswerVO() {
     }
 
-    public String getChoiceText() {
-        return choiceText;
+    public int getChoiceId() {
+        return choiceId;
     }
 
     public String getEmailPerson() {
@@ -21,22 +21,22 @@ public class AnswerVO {
     }
 
     public static class Builder{
-        private String choiceText;
+        private int choiceId;
         private String emailPerson;
 
         public Builder(){
         }
 
-        public Builder setchoiceText( String choiceText){
-            this.choiceText = choiceText;
+        public Builder setchoiceId( int choiceId){
+            this.choiceId = choiceId;
             return this;
         }
 
-        public Builder setPerson(String emailPerson){
+        public Builder setEmailPerson(String emailPerson){
             this.emailPerson = emailPerson;
             return this;
         }
-        public AnswerVO build(){ return new AnswerVO(choiceText, emailPerson);}
+        public AnswerVO build(){ return new AnswerVO(choiceId, emailPerson);}
     }
 
 }

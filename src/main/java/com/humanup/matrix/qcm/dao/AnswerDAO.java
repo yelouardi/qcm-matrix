@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface AnswerDAO extends CrudRepository<Answer, Long> {
-    Answer findByAnswer(String answer);
+    Answer findAnswerByEmailPersonAndChoiceId(String emailPerson, int choiceId);
     List<Answer> findAll();
     Answer findById(long id);
     @Query("SELECT a FROM Answer a WHERE lower(a.emailPerson) like %:emailPerson% ")

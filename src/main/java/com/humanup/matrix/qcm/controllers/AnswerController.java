@@ -9,31 +9,49 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class AnswerController {
+
     @Autowired
     private AnswerBS answerBS;
 
     @Operation(summary = "Create Answer",description = "Create new answer by ",tags = { "answer" })
     @RequestMapping(value = "/answer", method= RequestMethod.POST,consumes = {"application/json"})
     @ResponseBody
-    public ResponseEntity createAnswer(@RequestBody AnswerVO answer){
-        Optional<Object> findAnswer = Optional.ofNullable(answerBS.findAnswerByChoice(answer.getChoice()));
+    public ResponseEntity createAnswer(@RequestBody AnswerVO answer) throws AnswerException {
+        Optional<Object> findAnswer = Optional.ofNullable(answerBS.findAnswerByEmailPersonAndChoice(answer.getEmailPerson(),answer.getChoiceId()));
 
         if(findAnswer.isPresent()){
             return ResponseEntity.status(HttpStatus.FOUND).body("this answer is founded");
         }
-      //  answerBS.createAnswer(answer);
+
+        answerBS.createAnswer(answer);
         return ResponseEntity.status(HttpStatus.CREATED).body(answer);
     }
 
-    @Operation(summary="Create Answer", description ="", tags = {"person"})
-    @RequestMapping(value ="answer/person", method=RequestMethod.POST,consumes={ "application/json"})
+    @Operation(summary = "Find all answer", description = "Find all answers", tags = { "answer" })
+    @RequestMapping(value="/answer/all", method=RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity addPersonAnswer(@RequestParam(value="choice", defaultValue = "aa") String answer) throws AnswerException{
+    public ResponseEntity getAllAnswerInfo(){
+        List<AnswerVO> findAnswer= answerBS.findListAnswer();
 
+        if(findAnswer.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(findAnswer);
     }
 
+    @Operation(summary = "Find all answers by person", description = "Find all answer by person emailAdress", tags = { "answer" })
+    @RequestMapping(value="/answer/all/person", method=RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getAnswerPerson(@RequestParam(value="emailAddress", defaultValue="khalil@gmail.com") String emailAddress){
+        Optional<List<AnswerVO>> findAnswer = Optional.ofNullable(answerBS.findListAnswerByEmailPerson(emailAddress));
+        if(findAnswer.get().isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This emailAddress not Found");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(findAnswer.get());
+    }
 }

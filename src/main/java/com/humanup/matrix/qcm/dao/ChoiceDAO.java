@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface ChoiceDAO extends CrudRepository<Choice, Long> {
-    Choice findByChoiceText(String choice);
+    Choice findByChoiceId(int choiceId);
     List<Choice> findAll();
     Choice findById(long id);
     @Query("SELECT c FROM Choice c WHERE lower(c.question.questionId) like %:questionId% ")

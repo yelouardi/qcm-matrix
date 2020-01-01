@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +27,7 @@ public class AnswerBSImpl implements AnswerBS {
 
     @Override
     public boolean createAnswer(AnswerVO answerVO) throws AnswerException {
-        Choice Choice = choiceDAO.findByChoiceText(answerVO.getChoiceText());
+        Choice Choice = choiceDAO.findByChoiceId(answerVO.getChoiceId());
         Answer answerToSave =new Answer.Builder()
                 .setChoice(Choice)
                 .setEmailPerson(answerVO.getEmailPerson())
@@ -39,8 +40,8 @@ public class AnswerBSImpl implements AnswerBS {
         return answerDAO.findAll()
                 .stream()
                 .map(answerFinded -> new AnswerVO.Builder()
-                        .setchoiceText(answerFinded.getChoice().getChoiceText())
-                        .setPerson(answerFinded.getEmailPerson())
+                        .setchoiceId(answerFinded.getChoice().getId())
+                        .setEmailPerson(answerFinded.getEmailPerson())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -50,9 +51,22 @@ public class AnswerBSImpl implements AnswerBS {
         return answerDAO.findListAnswerByEmailPerson(firstName)
                 .stream()
                 .map(answerFinded -> new AnswerVO.Builder()
-                        .setchoiceText(answerFinded.getChoice().getChoiceText())
-                        .setPerson(answerFinded.getEmailPerson())
+                        .setchoiceId(answerFinded.getChoice().getId())
+                        .setEmailPerson(answerFinded.getEmailPerson())
                         .build())
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public AnswerVO findAnswerByEmailPersonAndChoice(String emailPerson, int choiceId) {
+        Optional<Answer> answerFinded = Optional.ofNullable(answerDAO.findAnswerByEmailPersonAndChoiceId(emailPerson,choiceId));
+        if(answerFinded.isPresent()) {
+            return new AnswerVO.Builder()
+                    .setchoiceId(answerFinded.get().getChoice().getId())
+                    .setEmailPerson(answerFinded.get().getEmailPerson())
+                    .build();
+        }
+    return null;
+    }
+
 }

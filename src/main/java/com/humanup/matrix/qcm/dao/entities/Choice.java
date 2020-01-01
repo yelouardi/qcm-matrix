@@ -7,7 +7,7 @@ public class Choice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
-    private Long id;
+    private int id;
     private String choiceText;
     private int percentage;
 
@@ -24,7 +24,7 @@ public class Choice {
         this.question = question;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
     public String getChoiceText() {
@@ -34,7 +34,7 @@ public class Choice {
     public Question getQuestion() { return question; }
 
     public static class Builder{
-        private Long id;
+        private int id;
         private String choiceText;
         private int percentage;
         private Question question;
@@ -42,7 +42,7 @@ public class Choice {
         public Builder(){
         }
 
-        public Builder setId(Long id){
+        public Builder setId(int id){
             this.id = id;
             return this;
         }
