@@ -1,11 +1,8 @@
 package com.humanup.matrix.qcm.bs.impl;
 
 import com.humanup.matrix.qcm.bs.QuestionBS;
-import com.humanup.matrix.qcm.dao.ChoiceDAO;
 import com.humanup.matrix.qcm.dao.QuestionDAO;
-import com.humanup.matrix.qcm.dao.entities.Choice;
 import com.humanup.matrix.qcm.dao.entities.Question;
-import com.humanup.matrix.qcm.vo.ChoiceVO;
 import com.humanup.matrix.qcm.vo.QuestionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

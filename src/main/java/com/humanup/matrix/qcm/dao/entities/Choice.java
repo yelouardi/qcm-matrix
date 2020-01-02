@@ -6,44 +6,54 @@ public class Choice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
-    private int id;
+    @Column(name = "choiceId", updatable = false, nullable = false)
+    private int choiceId;
     private String choiceText;
     private int percentage;
+
+
+
+    @OneToOne(fetch = FetchType.LAZY,cascade =  CascadeType.ALL, mappedBy = "choice")
+    private Answer answer;
 
     @ManyToOne
     @JoinColumn(name = "questionId")
     private Question question;
 
+
+
     public Choice() {
     }
 
-    public Choice(String choiceText, int percentage,Question question) {
+    public Choice(String choiceText, int percentage,Question question,Answer answer) {
         this.choiceText = choiceText;
         this.percentage = percentage;
         this.question = question;
+        this.answer = answer;
     }
 
-    public int getId() {
-        return id;
+    public int getChoiceId() {
+        return choiceId;
     }
     public String getChoiceText() {
         return choiceText;
     }
     public int getPercentage() { return percentage; }
     public Question getQuestion() { return question; }
+    public Answer getAnswer() { return answer; }
 
     public static class Builder{
-        private int id;
+        private int choiceId;
         private String choiceText;
         private int percentage;
         private Question question;
+        private Answer answer;
 
         public Builder(){
         }
 
-        public Builder setId(int id){
-            this.id = id;
+        public Builder setChoiceId(int choiceId){
+            this.choiceId = choiceId;
             return this;
         }
 
@@ -62,6 +72,11 @@ public class Choice {
             return this;
         }
 
-        public Choice build(){return new Choice(choiceText, percentage, question);}
+        public Builder setAnswer(Answer answer){
+            this.answer = answer;
+            return this;
+        }
+
+        public Choice build(){return new Choice(choiceText, percentage, question,answer);}
     }
 }

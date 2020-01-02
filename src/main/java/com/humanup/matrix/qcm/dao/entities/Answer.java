@@ -5,8 +5,17 @@ import javax.persistence.*;
 
 @Entity
 public class Answer {
-    private Choice choice;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "answerId", updatable = false, nullable = false)
+    private Long answerId;
     private String emailPerson;
+
+    @OneToOne(optional = false)
+    @JoinColumn(name = "choice_id", nullable = false)
+    private Choice choice;
+
 
     public Answer(Choice choice, String emailPerson) {
         this.choice = choice;
@@ -14,6 +23,10 @@ public class Answer {
     }
 
     public Answer() {
+    }
+
+    public Long getAnswerId() {
+        return answerId;
     }
 
     public Choice getChoice() {
@@ -25,10 +38,16 @@ public class Answer {
     }
 
     public static class Builder{
+        private long answerId;
         private Choice choice;
         private String emailPerson;
 
         public Builder(){
+        }
+
+        public Answer.Builder setAnswerId(long answerId){
+            this.answerId = answerId;
+            return this;
         }
 
         public Answer.Builder setChoice(Choice choice){

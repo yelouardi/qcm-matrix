@@ -1,17 +1,18 @@
 package com.humanup.matrix.qcm.dao.entities;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Long id;
+    @Column(name = "questionId", updatable = false, nullable = false)
+    private Long questionId;
     private String questionText;
+
+    @OneToMany(mappedBy="choice",fetch=FetchType.LAZY)
+    private List<Choice> choiceList;
 
     public Question(String questionText) {
         this.questionText = questionText;
@@ -20,17 +21,20 @@ public class Question {
     public Question() {
     }
 
+    public Long getQuestionId() {
+        return questionId;
+    }
+
     public String getQuestionText() {
         return questionText;
     }
 
-    public Long getId() {
-        return id;
+    public List<Choice> getChoiceList() {
+        return choiceList;
     }
 
-
     public static class Builder{
-        private Long id;
+        private Long questionId;
         private String questionText;
 
         public Builder(){
@@ -41,8 +45,8 @@ public class Question {
             return this;
         }
 
-        public Builder setId(Long id) {
-            this.id = id;
+        public Builder setQuestionId(Long questionId) {
+            this.questionId = questionId;
             return this;
         }
 

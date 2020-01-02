@@ -40,7 +40,7 @@ public class AnswerBSImpl implements AnswerBS {
         return answerDAO.findAll()
                 .stream()
                 .map(answerFinded -> new AnswerVO.Builder()
-                        .setchoiceId(answerFinded.getChoice().getId())
+                        .setchoiceId(answerFinded.getChoice().getChoiceId())
                         .setEmailPerson(answerFinded.getEmailPerson())
                         .build())
                 .collect(Collectors.toList());
@@ -51,7 +51,7 @@ public class AnswerBSImpl implements AnswerBS {
         return answerDAO.findListAnswerByEmailPerson(firstName)
                 .stream()
                 .map(answerFinded -> new AnswerVO.Builder()
-                        .setchoiceId(answerFinded.getChoice().getId())
+                        .setchoiceId(answerFinded.getChoice().getChoiceId())
                         .setEmailPerson(answerFinded.getEmailPerson())
                         .build())
                 .collect(Collectors.toList());
@@ -62,7 +62,7 @@ public class AnswerBSImpl implements AnswerBS {
         Optional<Answer> answerFinded = Optional.ofNullable(answerDAO.findAnswerByEmailPersonAndChoiceId(emailPerson,choiceId));
         if(answerFinded.isPresent()) {
             return new AnswerVO.Builder()
-                    .setchoiceId(answerFinded.get().getChoice().getId())
+                    .setchoiceId(answerFinded.get().getChoice().getChoiceId())
                     .setEmailPerson(answerFinded.get().getEmailPerson())
                     .build();
         }
