@@ -24,7 +24,7 @@ public class ChoiceController {
     public ResponseEntity createChoice(@RequestBody ChoiceVO choice) {
         Optional<Object> findChoice = Optional.ofNullable(choiceBS.findChoiceByQuestionId(choice.getQuestionId()));
 
-        if(findChoice.isPresent()){
+        if(findChoice.isPresent() && null!=findChoice.get()){
             return ResponseEntity.status(HttpStatus.FOUND).body("this choice is founded");
         }
 
