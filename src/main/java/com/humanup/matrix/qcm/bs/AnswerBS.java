@@ -9,5 +9,5 @@ public interface AnswerBS {
     boolean createAnswer(AnswerVO answer) throws AnswerException;
     List <AnswerVO> findListAnswer();
     List<AnswerVO> findListAnswerByEmailPerson(String emailPerson);
-    AnswerVO findAnswerByEmailPersonAndChoice(String emailPerson,int choiceId);
+    AnswerVO findAnswerByEmailPersonAndChoice(String emailPerson,Long choiceId);
 }

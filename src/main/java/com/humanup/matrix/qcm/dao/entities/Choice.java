@@ -2,16 +2,14 @@ package com.humanup.matrix.qcm.dao.entities;
 
 import javax.persistence.*;
 
+@Entity
 public class Choice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "choiceId", updatable = false, nullable = false)
-    private int choiceId;
+    private Long choiceId;
     private String choiceText;
     private int percentage;
-
-
 
     @OneToOne(fetch = FetchType.LAZY,cascade =  CascadeType.ALL, mappedBy = "choice")
     private Answer answer;
@@ -19,8 +17,6 @@ public class Choice {
     @ManyToOne
     @JoinColumn(name = "questionId")
     private Question question;
-
-
 
     public Choice() {
     }
@@ -32,7 +28,7 @@ public class Choice {
         this.answer = answer;
     }
 
-    public int getChoiceId() {
+    public Long getChoiceId() {
         return choiceId;
     }
     public String getChoiceText() {
@@ -43,7 +39,7 @@ public class Choice {
     public Answer getAnswer() { return answer; }
 
     public static class Builder{
-        private int choiceId;
+        private Long choiceId;
         private String choiceText;
         private int percentage;
         private Question question;
@@ -52,7 +48,7 @@ public class Choice {
         public Builder(){
         }
 
-        public Builder setChoiceId(int choiceId){
+        public Builder setChoiceId(Long choiceId){
             this.choiceId = choiceId;
             return this;
         }

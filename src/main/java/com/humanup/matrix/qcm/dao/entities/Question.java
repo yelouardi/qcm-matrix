@@ -3,15 +3,15 @@ package com.humanup.matrix.qcm.dao.entities;
 import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "questionId", updatable = false, nullable = false)
     private Long questionId;
     private String questionText;
 
-    @OneToMany(mappedBy="choice",fetch=FetchType.LAZY)
+    @OneToMany(mappedBy="question",fetch=FetchType.LAZY)
     private List<Choice> choiceList;
 
     public Question(String questionText) {

@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface QuestionDAO extends CrudRepository<Question, Long>  {
-    Question findByQuestionText(String questionText);
+    Question findQuestionByQuestionId(Long questionId);
     List<Question> findAll();
     Question findById(long id);
 }

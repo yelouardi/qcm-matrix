@@ -21,15 +21,15 @@ public class AnswerController {
     @Operation(summary = "Create Answer",description = "Create new answer by ",tags = { "answer" })
     @RequestMapping(value = "/answer", method= RequestMethod.POST,consumes = {"application/json"})
     @ResponseBody
-    public ResponseEntity createAnswer(@RequestBody AnswerVO answer) throws AnswerException {
-        Optional<Object> findAnswer = Optional.ofNullable(answerBS.findAnswerByEmailPersonAndChoice(answer.getEmailPerson(),answer.getChoiceId()));
+    public ResponseEntity createAnswer(@RequestBody AnswerVO answerVO) throws AnswerException {
+        Optional<Object> findAnswer = Optional.ofNullable(answerBS.findAnswerByEmailPersonAndChoice(answerVO.getEmailPerson(),answerVO.getChoiceId()));
 
         if(findAnswer.isPresent()){
             return ResponseEntity.status(HttpStatus.FOUND).body("this answer is founded");
         }
 
-        answerBS.createAnswer(answer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(answer);
+        answerBS.createAnswer(answerVO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(answerVO);
     }
 
     @Operation(summary = "Find all answer", description = "Find all answers", tags = { "answer" })

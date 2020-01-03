@@ -25,7 +25,7 @@ public class ChoiceBSImpl implements ChoiceBS {
 
     @Override
     public boolean createChoice(ChoiceVO choiceVO) {
-        Question question = questionDAO.findByQuestionText(choiceVO.getQuestion());
+        Question question = questionDAO.findQuestionByQuestionId(choiceVO.getQuestionId());
         Choice choiceToSave =new Choice.Builder()
                 .setChoiceText(choiceVO.getChoiceText())
                 .setPercentage(choiceVO.getPercentage())
@@ -41,19 +41,19 @@ public class ChoiceBSImpl implements ChoiceBS {
                 .map(choiceFinded -> new ChoiceVO.Builder()
                         .setChoiceText(choiceFinded.getChoiceText())
                         .setPercentage(choiceFinded.getPercentage())
-                        .setQuestion(choiceFinded.getQuestion().getQuestionText())
+                        .setQuestionId(choiceFinded.getQuestion().getQuestionId())
                         .build())
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ChoiceVO> findChoiceByQuestionId(int questionId) {
+    public List<ChoiceVO> findChoiceByQuestionId(Long questionId) {
         return choiceDAO.findChoiceByQuestionId(questionId)
                 .stream()
                 .map(choiceFinded -> new ChoiceVO.Builder()
                         .setChoiceText(choiceFinded.getChoiceText())
                         .setPercentage(choiceFinded.getPercentage())
-                        .setQuestion(choiceFinded.getQuestion().getQuestionText())
+                        .setQuestionId(choiceFinded.getQuestion().getQuestionId())
                         .build())
                 .collect(Collectors.toList());
     }

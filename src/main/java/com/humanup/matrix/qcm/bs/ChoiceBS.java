@@ -9,5 +9,5 @@ import java.util.List;
 public interface ChoiceBS {
     boolean createChoice(ChoiceVO choice);
     List<ChoiceVO> findListChoice();
-    List<ChoiceVO> findChoiceByQuestionId(int questionId);
+    List<ChoiceVO> findChoiceByQuestionId(Long questionId);
 }

@@ -8,12 +8,11 @@ public class Answer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "answerId", updatable = false, nullable = false)
     private Long answerId;
     private String emailPerson;
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "choice_id", nullable = false)
+    @JoinColumn(name = "choiceId", nullable = false)
     private Choice choice;
 
 
