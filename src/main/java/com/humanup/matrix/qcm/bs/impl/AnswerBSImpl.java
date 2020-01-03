@@ -59,7 +59,7 @@ public class AnswerBSImpl implements AnswerBS {
 
     @Override
     public AnswerVO findAnswerByEmailPersonAndChoice(String emailPerson, Long choiceId) {
-        Optional<Answer> answerFinded = Optional.ofNullable(answerDAO.findAnswerByEmailPersonAndChoiceId(emailPerson,choiceId));
+        Optional<Answer> answerFinded = Optional.ofNullable(answerDAO.findAnswerByEmailPersonAndChoice(emailPerson,choiceId));
         if(answerFinded.isPresent()) {
             return new AnswerVO.Builder()
                     .setchoiceId(answerFinded.get().getChoice().getChoiceId())

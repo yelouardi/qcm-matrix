@@ -1,8 +1,7 @@
 package com.humanup.matrix.qcm.controllers;
 
-import com.humanup.matrix.qcm.bs.AnswerBS;
-import com.humanup.matrix.qcm.exceptions.AnswerException;
-import com.humanup.matrix.qcm.vo.AnswerVO;
+import com.humanup.matrix.qcm.bs.ChoiceBS;
+import com.humanup.matrix.qcm.vo.ChoiceVO;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,46 +11,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
 public class ChoiceController {
 
     @Autowired
-    private AnswerBS answerBS;
+    private ChoiceBS choiceBS;
 
-    @Operation(summary = "Create Answer",description = "Create new answer by ",tags = { "answer" })
-    @RequestMapping(value = "/answer", method= RequestMethod.POST,consumes = {"application/json"})
+    @Operation(summary = "Create Choice",description = "Create choice answer by ",tags = { "choice" })
+    @RequestMapping(value = "/choice", method= RequestMethod.POST,consumes = {"application/json"})
     @ResponseBody
-    public ResponseEntity createAnswer(@RequestBody AnswerVO answer) throws AnswerException {
-        Optional<Object> findAnswer = Optional.ofNullable(answerBS.findAnswerByEmailPersonAndChoice(answer.getEmailPerson(),answer.getChoiceId()));
+    public ResponseEntity createChoice(@RequestBody ChoiceVO choice) {
+        Optional<Object> findChoice = Optional.ofNullable(choiceBS.findChoiceByQuestionId(choice.getQuestionId()));
 
-        if(findAnswer.isPresent()){
-            return ResponseEntity.status(HttpStatus.FOUND).body("this answer is founded");
+        if(findChoice.isPresent()){
+            return ResponseEntity.status(HttpStatus.FOUND).body("this choice is founded");
         }
 
-        answerBS.createAnswer(answer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(answer);
+        choiceBS.createChoice(choice);
+        return ResponseEntity.status(HttpStatus.CREATED).body(choice);
     }
 
-    @Operation(summary = "Find all answer", description = "Find all answers", tags = { "answer" })
-    @RequestMapping(value="/answer/all", method=RequestMethod.GET)
+    @Operation(summary = "Find all choice", description = "Find all choice", tags = { "choice" })
+    @RequestMapping(value="/choice/all", method=RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getAllAnswerInfo(){
-        List<AnswerVO> findAnswer= answerBS.findListAnswer();
+    public ResponseEntity getAllChoiceInfo(){
+        List<ChoiceVO> findChoice= choiceBS.findListChoice();
 
-        if(findAnswer.isEmpty()){
+        if(findChoice.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.status(HttpStatus.OK).body(findAnswer);
-    }
-
-    @Operation(summary = "Find all answers by person", description = "Find all answer by person emailAdress", tags = { "answer" })
-    @RequestMapping(value="/answer/all/person", method=RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity getAnswerPerson(@RequestParam(value="emailAddress", defaultValue="khalil@gmail.com") String emailAddress){
-        Optional<List<AnswerVO>> findAnswer = Optional.ofNullable(answerBS.findListAnswerByEmailPerson(emailAddress));
-        if(findAnswer.get().isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This emailAddress not Found");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(findAnswer.get());
+        return ResponseEntity.status(HttpStatus.OK).body(findChoice);
     }
 }

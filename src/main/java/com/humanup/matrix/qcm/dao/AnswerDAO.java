@@ -9,9 +9,9 @@ import java.util.List;
 public interface AnswerDAO extends CrudRepository<Answer, Long> {
 
   //  @Query("SELECT a FROM Answer a WHERE lower(a.emailPerson) like %:emailPerson% and a.choice.choiceId = :choiceId ")
-    Answer findAnswerByEmailPersonAndChoiceId(String emailPerson, Long choiceId);
+    Answer findAnswerByEmailPersonAndChoice(String emailPerson, Long choice);
     List<Answer> findAll();
-    Answer findById(long id);
+    //Answer findById(Long id);
     @Query("SELECT a FROM Answer a WHERE lower(a.emailPerson) like %:emailPerson% ")
     List<Answer> findListAnswerByEmailPerson(String emailPerson);
 }

@@ -1,8 +1,10 @@
 package com.humanup.matrix.qcm.controllers;
 
 import com.humanup.matrix.qcm.bs.AnswerBS;
+import com.humanup.matrix.qcm.bs.QuestionBS;
 import com.humanup.matrix.qcm.exceptions.AnswerException;
 import com.humanup.matrix.qcm.vo.AnswerVO;
+import com.humanup.matrix.qcm.vo.QuestionVO;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,42 +18,31 @@ import java.util.Optional;
 public class QuestionController {
 
     @Autowired
-    private AnswerBS answerBS;
+    private QuestionBS questionBS;
 
-    @Operation(summary = "Create Answer",description = "Create new answer by ",tags = { "answer" })
-    @RequestMapping(value = "/answer", method= RequestMethod.POST,consumes = {"application/json"})
+    @Operation(summary = "Create Question",description = "Create new question by ",tags = { "question" })
+    @RequestMapping(value = "/question", method= RequestMethod.POST,consumes = {"application/json"})
     @ResponseBody
-    public ResponseEntity createAnswer(@RequestBody AnswerVO answer) throws AnswerException {
-        Optional<Object> findAnswer = Optional.ofNullable(answerBS.findAnswerByEmailPersonAndChoice(answer.getEmailPerson(),answer.getChoiceId()));
+    public ResponseEntity createQuestion(@RequestBody QuestionVO question){
+        Optional<Object> findQuestion = Optional.ofNullable(questionBS.findListQuestion());
 
-        if(findAnswer.isPresent()){
-            return ResponseEntity.status(HttpStatus.FOUND).body("this answer is founded");
+        if(findQuestion.isPresent()){
+            return ResponseEntity.status(HttpStatus.FOUND).body("this question is founded");
         }
 
-        answerBS.createAnswer(answer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(answer);
+        questionBS.createQuestion(question);
+        return ResponseEntity.status(HttpStatus.CREATED).body(question);
     }
 
-    @Operation(summary = "Find all answer", description = "Find all answers", tags = { "answer" })
-    @RequestMapping(value="/answer/all", method=RequestMethod.GET)
+    @Operation(summary = "Find questions list", description = "Find all questions", tags = { "question" })
+    @RequestMapping(value="/question/all", method=RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getAllAnswerInfo(){
-        List<AnswerVO> findAnswer= answerBS.findListAnswer();
+    public ResponseEntity findListQuestion(){
+        List<QuestionVO> findQuestion= questionBS.findListQuestion();
 
-        if(findAnswer.isEmpty()){
+        if(findQuestion.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.status(HttpStatus.OK).body(findAnswer);
-    }
-
-    @Operation(summary = "Find all answers by person", description = "Find all answer by person emailAdress", tags = { "answer" })
-    @RequestMapping(value="/answer/all/person", method=RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity getAnswerPerson(@RequestParam(value="emailAddress", defaultValue="khalil@gmail.com") String emailAddress){
-        Optional<List<AnswerVO>> findAnswer = Optional.ofNullable(answerBS.findListAnswerByEmailPerson(emailAddress));
-        if(findAnswer.get().isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This emailAddress not Found");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(findAnswer.get());
+        return ResponseEntity.status(HttpStatus.OK).body(findQuestion);
     }
 }
