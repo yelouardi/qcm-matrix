@@ -37,14 +37,14 @@ public class Answer {
     }
 
     public static class Builder{
-        private long answerId;
+        private Long answerId;
         private Choice choice;
         private String emailPerson;
 
         public Builder(){
         }
 
-        public Answer.Builder setAnswerId(long answerId){
+        public Answer.Builder setAnswerId(Long answerId){
             this.answerId = answerId;
             return this;
         }
