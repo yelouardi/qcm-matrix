@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +35,18 @@ public class QuestionBSImpl implements QuestionBS {
                         .setQuestionText(questionFinded.getQuestionText())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public QuestionVO findQuestionById(Long questionId) {
+        Optional<Question> questionFinded = Optional.ofNullable(questionDAO.findQuestionByQuestionId(questionId));
+        if(questionFinded.isPresent()) {
+            return new QuestionVO.Builder()
+                    .setQuestionText(questionFinded.get().getQuestionText())
+                    .setQuestionId(questionFinded.get().getQuestionId())
+                    .build();
+        }
+        return null;
     }
 
 }
