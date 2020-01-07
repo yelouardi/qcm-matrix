@@ -21,8 +21,8 @@ public class QuestionBSImpl implements QuestionBS {
 
     @Override
     public boolean createQuestion(QuestionVO questionVO) {
-        Question questionToSave =new Question.Builder()
-                .setQuestionText(questionVO.getQuestionText())
+        Question questionToSave = Question.builder()
+                .questionText(questionVO.getQuestionText())
                 .build();
         return  questionDAO.save(questionToSave)!=null;
     }
@@ -31,8 +31,8 @@ public class QuestionBSImpl implements QuestionBS {
     public List<QuestionVO> findListQuestion() {
         return questionDAO.findAll()
                 .stream()
-                .map(questionFinded -> new QuestionVO.Builder()
-                        .setQuestionText(questionFinded.getQuestionText())
+                .map(questionFinded ->  QuestionVO.builder()
+                        .questionText(questionFinded.getQuestionText())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -41,9 +41,9 @@ public class QuestionBSImpl implements QuestionBS {
     public QuestionVO findQuestionById(Long questionId) {
         Optional<Question> questionFinded = Optional.ofNullable(questionDAO.findQuestionByQuestionId(questionId));
         if(questionFinded.isPresent()) {
-            return new QuestionVO.Builder()
-                    .setQuestionText(questionFinded.get().getQuestionText())
-                    .setQuestionId(questionFinded.get().getQuestionId())
+            return QuestionVO.builder()
+                    .questionText(questionFinded.get().getQuestionText())
+                    .questionId(questionFinded.get().getQuestionId())
                     .build();
         }
         return null;
