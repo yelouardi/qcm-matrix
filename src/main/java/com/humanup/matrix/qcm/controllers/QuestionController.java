@@ -24,7 +24,7 @@ public class QuestionController {
     @RequestMapping(value = "/question", method= RequestMethod.POST,consumes = {"application/json"})
     @ResponseBody
     public ResponseEntity createQuestion(@RequestBody QuestionVO question){
-        Optional<Object> findQuestion = Optional.ofNullable(questionBS.findListQuestion());
+        Optional<Object> findQuestion = Optional.ofNullable(questionBS.findQuestionById(question.getQuestionId()));
 
         if(findQuestion.isPresent()){
             return ResponseEntity.status(HttpStatus.FOUND).body("this question is founded");

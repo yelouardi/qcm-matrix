@@ -22,10 +22,11 @@ public class ChoiceController {
     @RequestMapping(value = "/choice", method= RequestMethod.POST,consumes = {"application/json"})
     @ResponseBody
     public ResponseEntity createChoice(@RequestBody ChoiceVO choice) {
-        Optional<Object> findChoice = Optional.ofNullable(choiceBS.findChoiceByQuestionId(choice.getQuestionId()));
+       // Optional<Object> findChoice = Optional.ofNullable(choiceBS.findChoiceByQuestionId(choice.getQuestionId()));
+        List<ChoiceVO> lstChoices = choiceBS.findChoiceByQuestionId(choice.getQuestionId());
 
-        if(findChoice.isPresent() && null!=findChoice.get()){
-            return ResponseEntity.status(HttpStatus.FOUND).body("this choice is founded");
+        if(lstChoices.size()==4){
+            return ResponseEntity.status(HttpStatus.FOUND).body("this question ID " + choice.getQuestionId()+ " can't have more four choices");
         }
 
         choiceBS.createChoice(choice);

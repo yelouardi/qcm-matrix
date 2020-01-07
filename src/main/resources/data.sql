@@ -31,8 +31,7 @@ DROP TABLE IF EXISTS question;
   ('choice 4', '0',2),
   ('choice 1','100',3),
   ('choice 2', '50',3),
-  ('choice 3', '25',3),
-  ('choice 4', '0',3);
+  ('choice 3', '25',3);
 
 CREATE TABLE answer (
   answer_id INT AUTO_INCREMENT PRIMARY KEY,
