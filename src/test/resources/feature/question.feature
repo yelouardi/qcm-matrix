@@ -12,17 +12,14 @@ Feature: Question End Point
 
 
   Scenario: Add new Question OK response
-    def
     Given  path 'question'
     And request { questionText: 'question 4' }
     When method POST
     Then status 201
     And def question = response
 
-
   Scenario: Add new Question KO response
     Given  path 'question'
-    And request { questionId: 2 }
+    And request { questionText: 'question 4' }
     When method POST
     Then status 302
-    And match $ == "this question is founded"

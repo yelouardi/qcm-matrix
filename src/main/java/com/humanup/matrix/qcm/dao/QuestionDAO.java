@@ -10,4 +10,5 @@ import java.util.List;
 public interface QuestionDAO extends CrudRepository<Question, Long>  {
     Question findQuestionByQuestionId(Long questionId);
     List<Question> findAll();
+    Question findQuestionByQuestionText(String questionText);
 }
