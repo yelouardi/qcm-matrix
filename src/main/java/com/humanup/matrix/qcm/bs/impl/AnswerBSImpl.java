@@ -28,9 +28,9 @@ public class AnswerBSImpl implements AnswerBS {
     @Override
     public boolean createAnswer(AnswerVO answerVO) throws AnswerException {
         Choice Choice = choiceDAO.findByChoiceId(answerVO.getChoiceId());
-        Answer answerToSave =new Answer.Builder()
-                .setChoice(Choice)
-                .setEmailPerson(answerVO.getEmailPerson())
+        Answer answerToSave = Answer.builder()
+                .choice(Choice)
+                .emailPerson(answerVO.getEmailPerson())
                 .build();
         return  answerDAO.save(answerToSave)!=null;
     }
@@ -39,9 +39,9 @@ public class AnswerBSImpl implements AnswerBS {
     public List<AnswerVO> findListAnswer() {
         return answerDAO.findAll()
                 .stream()
-                .map(answerFinded -> new AnswerVO.Builder()
-                        .setchoiceId(answerFinded.getChoice().getChoiceId())
-                        .setEmailPerson(answerFinded.getEmailPerson())
+                .map(answerFinded ->  AnswerVO.builder()
+                        .choiceId(answerFinded.getChoice().getChoiceId())
+                        .emailPerson(answerFinded.getEmailPerson())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -50,9 +50,9 @@ public class AnswerBSImpl implements AnswerBS {
     public List<AnswerVO> findListAnswerByEmailPerson(String firstName) {
         return answerDAO.findListAnswerByEmailPerson(firstName)
                 .stream()
-                .map(answerFinded -> new AnswerVO.Builder()
-                        .setchoiceId(answerFinded.getChoice().getChoiceId())
-                        .setEmailPerson(answerFinded.getEmailPerson())
+                .map(answerFinded ->  AnswerVO.builder()
+                        .choiceId(answerFinded.getChoice().getChoiceId())
+                        .emailPerson(answerFinded.getEmailPerson())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -61,9 +61,9 @@ public class AnswerBSImpl implements AnswerBS {
     public AnswerVO findAnswerByEmailPersonAndChoice(String emailPerson, Long choiceId) {
         Optional<Answer> answerFinded = Optional.ofNullable(answerDAO.findAnswerByEmailPersonAndChoice(emailPerson,choiceId));
         if(answerFinded.isPresent()) {
-            return new AnswerVO.Builder()
-                    .setchoiceId(answerFinded.get().getChoice().getChoiceId())
-                    .setEmailPerson(answerFinded.get().getEmailPerson())
+            return  AnswerVO.builder()
+                    .choiceId(answerFinded.get().getChoice().getChoiceId())
+                    .emailPerson(answerFinded.get().getEmailPerson())
                     .build();
         }
     return null;
