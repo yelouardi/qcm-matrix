@@ -49,4 +49,16 @@ public class QuestionBSImpl implements QuestionBS {
         return null;
     }
 
+    @Override
+    public QuestionVO findQuestionByQuestionText(String questionText) {
+        Optional<Question> questionFinded = Optional.ofNullable(questionDAO.findQuestionByQuestionText(questionText));
+        if(questionFinded.isPresent()) {
+            return QuestionVO.builder()
+                    .questionText(questionFinded.get().getQuestionText())
+                    .questionId(questionFinded.get().getQuestionId())
+                    .build();
+        }
+        return null;
+    }
+
 }

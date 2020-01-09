@@ -8,4 +8,5 @@ public interface QuestionBS {
     boolean createQuestion(QuestionVO question);
     List<QuestionVO> findListQuestion();
     QuestionVO findQuestionById(Long questionId);
+    QuestionVO findQuestionByQuestionText(String questionText);
 }
