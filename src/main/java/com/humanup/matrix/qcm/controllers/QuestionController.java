@@ -45,4 +45,16 @@ public class QuestionController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(findQuestion);
     }
+
+    @Operation(summary = "Find questions by Id", description = "Find all questions by Id", tags = { "question" })
+    @RequestMapping(value="/question", method=RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity findQuestionByQuestionId(@RequestParam(value="questionId", defaultValue="1") Long questionId){
+        Optional<QuestionVO> findQuestion = Optional.ofNullable(questionBS.findQuestionById(questionId));
+
+        if(findQuestion.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(findQuestion.get());
+    }
 }

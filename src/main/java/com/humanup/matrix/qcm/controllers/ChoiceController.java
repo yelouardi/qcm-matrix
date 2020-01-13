@@ -44,4 +44,16 @@ public class ChoiceController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(findChoice);
     }
+
+    @Operation(summary = "Find all choice by question Id", description = "Find all choice by question Id", tags = { "choice" })
+    @RequestMapping(value="/choice/all/question", method=RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getChoicesByQuestionId(@RequestParam(value="questionId", defaultValue="1") Long questionId){
+        Optional<List<ChoiceVO>> findChoices= Optional.ofNullable(choiceBS.findChoiceByQuestionId(questionId));
+
+        if(findChoices.get().isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(findChoices);
+    }
 }
