@@ -14,4 +14,6 @@ public interface ChoiceDAO extends CrudRepository<Choice, Long> {
     Choice findById(long id);
     @Query("SELECT c FROM Choice c WHERE c.question.questionId = :questionId ")
     List<Choice> findChoiceByQuestionId(Long questionId);
+    @Query("SELECT c FROM Choice c WHERE c.choiceId = :choiceId ")
+    Choice findChoiceByChoiceId(Long choiceId);
 }

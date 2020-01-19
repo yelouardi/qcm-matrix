@@ -6,11 +6,13 @@ import com.humanup.matrix.qcm.dao.QuestionDAO;
 import com.humanup.matrix.qcm.dao.entities.Choice;
 import com.humanup.matrix.qcm.dao.entities.Question;
 import com.humanup.matrix.qcm.vo.ChoiceVO;
+import com.humanup.matrix.qcm.vo.QuestionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,5 +58,18 @@ public class ChoiceBSImpl implements ChoiceBS {
                         .questionId(choiceFinded.getQuestion().getQuestionId())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ChoiceVO findChoiceByChoiceId(Long choiceId) {
+        Optional<Choice> choiceFinded = Optional.ofNullable(choiceDAO.findChoiceByChoiceId(choiceId));
+        if(choiceFinded.isPresent()) {
+            return ChoiceVO.builder()
+                    .choiceText(choiceFinded.get().getChoiceText())
+                    .percentage(choiceFinded.get().getPercentage())
+                    .questionId(choiceFinded.get().getQuestion().getQuestionId())
+                    .build();
+        }
+        return null;
     }
 }
