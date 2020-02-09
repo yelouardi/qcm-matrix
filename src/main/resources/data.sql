@@ -1,3 +1,6 @@
+CREATE database qcmdb;
+Use qcmdb;
+
 DROP TABLE IF EXISTS answer;
 DROP TABLE IF EXISTS choice;
 DROP TABLE IF EXISTS question;
