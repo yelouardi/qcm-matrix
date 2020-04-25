@@ -28,7 +28,7 @@ public class AnswerController {
             return ResponseEntity.status(HttpStatus.FOUND).body("this answer is founded");
         }
         try {
-            answerBS.createAnswer(answerVO);
+
         }catch(Exception ex){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Check your request");
         }
