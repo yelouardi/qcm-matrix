@@ -25,6 +25,6 @@ public class Question implements Serializable{
     @Column(name="question_text")
      String questionText;
 
-    @OneToMany(mappedBy="question",fetch=FetchType.LAZY)
+    @OneToMany(mappedBy="question",fetch=FetchType.EAGER)
      List<Choice> choiceList;
 }

@@ -24,10 +24,12 @@ public class AnswerController {
     public ResponseEntity createAnswer(@RequestBody AnswerVO answerVO) throws AnswerException {
         Optional<Object> findAnswer = Optional.ofNullable(answerBS.findAnswerByEmailPersonAndChoice(answerVO.getEmailPerson(),answerVO.getChoiceId()));
 
-        if(findAnswer.isPresent() &&null!=findAnswer.get()){
+        if(findAnswer.isPresent() && null!=findAnswer.get()){
             return ResponseEntity.status(HttpStatus.FOUND).body("this answer is founded");
         }
         try {
+
+
 
         }catch(Exception ex){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Check your request");

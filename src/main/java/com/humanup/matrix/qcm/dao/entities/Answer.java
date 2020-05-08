@@ -26,6 +26,6 @@ public class Answer implements Serializable{
      String emailPerson;
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "choiceId", nullable = false)
+    @JoinColumn(name = "choice_id", nullable = false)
      Choice choice;
 }
