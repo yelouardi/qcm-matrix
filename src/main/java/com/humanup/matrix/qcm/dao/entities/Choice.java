@@ -30,7 +30,7 @@ public class Choice implements Serializable{
      Answer answer;
 
     @ManyToOne
-    @JoinColumn(name = "questionId")
+    @JoinColumn(name = "question_id")
      Question question;
 
 }
