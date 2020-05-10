@@ -11,43 +11,42 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
 @Configuration
 public class RabbitMQAnswerConfig {
 
-    @Value("${answer.queue.name}")
-    String queueName;
+  @Value("${answer.queue.name}")
+  String queueName;
 
-    @Value("${answer.exchange.name}")
-    String exchange;
+  @Value("${answer.exchange.name}")
+  String exchange;
 
-    @Value("${answer.routing.key}")
-    String routingkey;
+  @Value("${answer.routing.key}")
+  String routingkey;
 
-    @Bean
-    Queue queue() {
-        return new Queue(queueName, true, false, true);
-    }
+  @Bean
+  Queue queue() {
+    return new Queue(queueName, true, false, true);
+  }
 
-    @Bean
-    DirectExchange exchange() {
-        return new DirectExchange(exchange);
-    }
+  @Bean
+  DirectExchange exchange() {
+    return new DirectExchange(exchange);
+  }
 
-    @Bean
-    Binding binding(Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(routingkey);
-    }
+  @Bean
+  Binding binding(Queue queue, DirectExchange exchange) {
+    return BindingBuilder.bind(queue).to(exchange).with(routingkey);
+  }
 
+  @Bean
+  public Jackson2JsonMessageConverter producerJackson2MessageConverter() {
+    return new Jackson2JsonMessageConverter();
+  }
 
-    @Bean
-    public Jackson2JsonMessageConverter producerJackson2MessageConverter() {
-        return new Jackson2JsonMessageConverter();
-    }
-    @Bean
-    public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
-        final var rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(producerJackson2MessageConverter());
-        return rabbitTemplate;
-    }
+  @Bean
+  public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
+    final var rabbitTemplate = new RabbitTemplate(connectionFactory);
+    rabbitTemplate.setMessageConverter(producerJackson2MessageConverter());
+    return rabbitTemplate;
+  }
 }

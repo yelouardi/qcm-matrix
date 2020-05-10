@@ -7,24 +7,21 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class RabbitMQAnswerSender {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQAnswerSender.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQAnswerSender.class);
 
-    private final RabbitTemplate rabbitTemplate;
+  private final RabbitTemplate rabbitTemplate;
 
-    public RabbitMQAnswerSender(RabbitTemplate rabbitTemplate) {
-        this.rabbitTemplate = rabbitTemplate;
-    }
+  public RabbitMQAnswerSender(RabbitTemplate rabbitTemplate) {
+    this.rabbitTemplate = rabbitTemplate;
+  }
 
-    @Value("${answer.queue.name}")
-    String queueName;
+  @Value("${answer.queue.name}")
+  String queueName;
 
-
-    public void send(AnswerVO answer) {
-        rabbitTemplate.convertAndSend(queueName, answer);
-        LOGGER.info("Sending message... {} " ,answer.toString());
-    }
-
+  public void send(AnswerVO answer) {
+    rabbitTemplate.convertAndSend(queueName, answer);
+    LOGGER.info("Sending message... {} ", answer.toString());
+  }
 }

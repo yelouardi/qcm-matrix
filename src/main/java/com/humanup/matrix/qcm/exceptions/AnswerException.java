@@ -1,4 +1,3 @@
 package com.humanup.matrix.qcm.exceptions;
 
-public class AnswerException extends Exception{
-}
+public class AnswerException extends Exception {}
