@@ -1,6 +1,6 @@
 Feature: Question End Point
   Background:
-    * url 'http://localhost:8090'
+    * url 'http://localhost:8020'
     * header Accept = 'application/json'
 
   Scenario: Testing valid GET endpoint
@@ -13,13 +13,13 @@ Feature: Question End Point
 
   Scenario: Add new Question OK response
     Given  path 'question'
-    And request { questionText: 'question 4' }
+    And request { questionText: 'question 7' }
     When method POST
     Then status 201
     And def question = response
 
   Scenario: Add new Question KO response
     Given  path 'question'
-    And request { questionText: 'question 4' }
+    And request { questionText: 'question 7' }
     When method POST
     Then status 302
