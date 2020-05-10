@@ -1,5 +1,7 @@
 package com.humanup.matrix.qcm.configuration;
 
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -12,42 +14,32 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-
-
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        entityManagerFactoryRef = "entityManagerFactoryWrite",
-        basePackages = {
-        "com.humanup.matrix.qcm.dao"},
-        transactionManagerRef = "transactionManagerWrite")
+    entityManagerFactoryRef = "entityManagerFactoryWrite",
+    basePackages = {"com.humanup.matrix.qcm.dao"},
+    transactionManagerRef = "transactionManagerWrite")
 public class DbWriteConfig {
-    @Bean(name = "dataSourceWrite")
-    @ConfigurationProperties(prefix = "write.datasource")
-    public DataSource dataSource() {
-        return DataSourceBuilder.create().build();
-    }
+  @Bean(name = "dataSourceWrite")
+  @ConfigurationProperties(prefix = "write.datasource")
+  public DataSource dataSource() {
+    return DataSourceBuilder.create().build();
+  }
 
-    @Bean(name = "entityManagerFactoryWrite")
-    public LocalContainerEntityManagerFactoryBean
-    entityManagerFactory(
-            EntityManagerFactoryBuilder builder,
-            @Qualifier("dataSourceWrite") DataSource dataSource
-    ) {
-        return builder
-                .dataSource(dataSource)
-                .packages("com.humanup.matrix.qcm.dao.entities")
-                .persistenceUnit("write")
-                .build();
-    }
+  @Bean(name = "entityManagerFactoryWrite")
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+      EntityManagerFactoryBuilder builder, @Qualifier("dataSourceWrite") DataSource dataSource) {
+    return builder
+        .dataSource(dataSource)
+        .packages("com.humanup.matrix.qcm.dao.entities")
+        .persistenceUnit("write")
+        .build();
+  }
 
-    @Bean(name = "transactionManagerWrite")
-    public PlatformTransactionManager transactionManager(
-            @Qualifier("entityManagerFactoryWrite") EntityManagerFactory
-                    entityManagerFactory
-    ) {
-        return new JpaTransactionManager(entityManagerFactory);
-    }
+  @Bean(name = "transactionManagerWrite")
+  public PlatformTransactionManager transactionManager(
+      @Qualifier("entityManagerFactoryWrite") EntityManagerFactory entityManagerFactory) {
+    return new JpaTransactionManager(entityManagerFactory);
+  }
 }

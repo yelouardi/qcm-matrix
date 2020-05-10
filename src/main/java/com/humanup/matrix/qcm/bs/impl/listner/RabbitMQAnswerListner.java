@@ -13,38 +13,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @RefreshScope
 public class RabbitMQAnswerListner {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQAnswerListner.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQAnswerListner.class);
 
-    @Autowired
-    private AnswerDAO answerDAO;
-    @Autowired
-    private ChoiceDAO choiceDAO;
+  @Autowired private AnswerDAO answerDAO;
+  @Autowired private ChoiceDAO choiceDAO;
 
-    @RabbitListener(queues = { "${answer.queue.name}" })
-    public void receive(AnswerVO answerVO) {
-        try {
-            LOGGER.info("Receive  message... {} ", answerVO.toString());
-            Choice choice = choiceDAO.findChoiceByChoiceId(answerVO.getChoiceId());
-            String email = answerVO.getEmailPerson();
+  @RabbitListener(queues = {"${answer.queue.name}"})
+  public void receive(AnswerVO answerVO) {
+    try {
+      LOGGER.info("Receive  message... {} ", answerVO.toString());
+      Choice choice = choiceDAO.findChoiceByChoiceId(answerVO.getChoiceId());
+      String email = answerVO.getEmailPerson();
 
-            if (null == choice || null == email || StringUtils.isEmpty(email)) {
-                LOGGER.info("Received message as generic: {}", answerVO.toString());
-            }
+      if (null == choice || null == email || StringUtils.isEmpty(email)) {
+        LOGGER.info("Received message as generic: {}", answerVO.toString());
+      }
 
-            Answer answerToSave = Answer.builder()
-                    .choice(choice)
-                    .emailPerson(email)
-                    .build();
-            answerDAO.save(answerToSave);
+      Answer answerToSave = Answer.builder().choice(choice).emailPerson(email).build();
+      answerDAO.save(answerToSave);
 
-        }catch(Exception ex){
-            LOGGER.info("Error  message... {} ", ex.getMessage(),ex);
-        }
+    } catch (Exception ex) {
+      LOGGER.info("Error  message... {} ", ex.getMessage(), ex);
     }
-
+  }
 }
-
