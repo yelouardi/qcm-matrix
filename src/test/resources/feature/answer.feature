@@ -13,7 +13,7 @@ Feature: Answer End Point
   Scenario: Add new Answer OK response
     def
     Given  path 'answer'
-    And request { choiceId: 7 ,emailPerson: 'karate-khalid@gmail.com' }
+    And request { choiceId: 8 ,emailPerson: 'karate-khalid@gmail.com' }
     When method POST
     Then status 201
     And def person = response
