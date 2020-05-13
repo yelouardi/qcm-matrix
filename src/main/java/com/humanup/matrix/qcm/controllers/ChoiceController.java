@@ -1,5 +1,6 @@
 package com.humanup.matrix.qcm.controllers;
 
+import com.humanup.matrix.qcm.aop.dto.ChoiceException;
 import com.humanup.matrix.qcm.bs.ChoiceBS;
 import com.humanup.matrix.qcm.vo.ChoiceVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +25,7 @@ public class ChoiceController {
       method = RequestMethod.POST,
       consumes = {"application/json"})
   @ResponseBody
-  public ResponseEntity createChoice(@RequestBody ChoiceVO choice) {
+  public ResponseEntity createChoice(@RequestBody ChoiceVO choice) throws ChoiceException {
     // Optional<Object> findChoice =
     // Optional.ofNullable(choiceBS.findChoiceByQuestionId(choice.getQuestionId()));
     List<ChoiceVO> lstChoices = choiceBS.findChoiceByQuestionId(choice.getQuestionId());

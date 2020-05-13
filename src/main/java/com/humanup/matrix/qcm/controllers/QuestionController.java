@@ -1,5 +1,6 @@
 package com.humanup.matrix.qcm.controllers;
 
+import com.humanup.matrix.qcm.aop.dto.QuestionException;
 import com.humanup.matrix.qcm.bs.QuestionBS;
 import com.humanup.matrix.qcm.vo.QuestionVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +25,7 @@ public class QuestionController {
       method = RequestMethod.POST,
       consumes = {"application/json"})
   @ResponseBody
-  public ResponseEntity createQuestion(@RequestBody QuestionVO question) {
+  public ResponseEntity createQuestion(@RequestBody QuestionVO question) throws QuestionException {
     Optional<Object> findQuestion =
         Optional.ofNullable(questionBS.findQuestionByQuestionText(question.getQuestionText()));
 
