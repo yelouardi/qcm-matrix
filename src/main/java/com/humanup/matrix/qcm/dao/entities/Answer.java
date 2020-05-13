@@ -1,63 +1,30 @@
 package com.humanup.matrix.qcm.dao.entities;
 
-
+import java.io.Serializable;
 import javax.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
+@ToString(of = {"answerId", "emailPerson"})
 @Entity
-public class Answer {
+@Table(name = "answer")
+public class Answer implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long answerId;
-    private String emailPerson;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "answer_id")
+  Long answerId;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "choiceId", nullable = false)
-    private Choice choice;
+  @Column(name = "email_person")
+  String emailPerson;
 
-
-    public Answer(Choice choice, String emailPerson) {
-        this.choice = choice;
-        this.emailPerson = emailPerson;
-    }
-
-    public Answer() {
-    }
-
-    public Long getAnswerId() {
-        return answerId;
-    }
-
-    public Choice getChoice() {
-        return choice;
-    }
-
-    public String getEmailPerson() {
-        return emailPerson;
-    }
-
-    public static class Builder{
-        private Long answerId;
-        private Choice choice;
-        private String emailPerson;
-
-        public Builder(){
-        }
-
-        public Answer.Builder setAnswerId(Long answerId){
-            this.answerId = answerId;
-            return this;
-        }
-
-        public Answer.Builder setChoice(Choice choice){
-            this.choice = choice;
-            return this;
-        }
-
-        public Answer.Builder setEmailPerson(String emailPerson){
-            this.emailPerson = emailPerson;
-            return this;
-        }
-        public Answer build(){ return new Answer(choice, emailPerson);}
-    }
+  @OneToOne(optional = false)
+  @JoinColumn(name = "choice_id", nullable = false)
+  Choice choice;
 }

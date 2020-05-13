@@ -1,56 +1,30 @@
 package com.humanup.matrix.qcm.dao.entities;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
+@ToString(of = {"questionId", "questionText", "choiceList"})
 @Entity
-public class Question {
+@Table(name = "question")
+public class Question implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long questionId;
-    private String questionText;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "question_id")
+  Long questionId;
 
-    @OneToMany(mappedBy="question",fetch=FetchType.LAZY)
-    private List<Choice> choiceList;
+  @Column(name = "question_text")
+  String questionText;
 
-    public Question(String questionText) {
-        this.questionText = questionText;
-    }
-
-    public Question() {
-    }
-
-    public Long getQuestionId() {
-        return questionId;
-    }
-
-    public String getQuestionText() {
-        return questionText;
-    }
-
-    public List<Choice> getChoiceList() {
-        return choiceList;
-    }
-
-    public static class Builder{
-        private Long questionId;
-        private String questionText;
-
-        public Builder(){
-        }
-
-        public Builder setQuestionText(String questionText) {
-            this.questionText = questionText;
-            return this;
-        }
-
-        public Builder setQuestionId(Long questionId) {
-            this.questionId = questionId;
-            return this;
-        }
-
-        public Question build(){return new Question(questionText);}
-    }
-
+  @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
+  List<Choice> choiceList;
 }
