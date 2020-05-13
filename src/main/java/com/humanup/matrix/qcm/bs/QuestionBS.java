@@ -5,11 +5,11 @@ import com.humanup.matrix.qcm.vo.QuestionVO;
 import java.util.List;
 
 public interface QuestionBS {
-    boolean createQuestion(QuestionVO question) throws QuestionException;
+  boolean createQuestion(QuestionVO question) throws QuestionException;
 
-    List<QuestionVO> findListQuestion();
+  List<QuestionVO> findListQuestion();
 
-    QuestionVO findQuestionById(Long questionId);
+  QuestionVO findQuestionById(Long questionId);
 
-    QuestionVO findQuestionByQuestionText(String questionText);
+  QuestionVO findQuestionByQuestionText(String questionText);
 }

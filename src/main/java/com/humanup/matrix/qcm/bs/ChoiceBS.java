@@ -5,12 +5,12 @@ import com.humanup.matrix.qcm.vo.ChoiceVO;
 import java.util.List;
 
 public interface ChoiceBS {
-    boolean createChoice(ChoiceVO choice) throws ChoiceException;
+  boolean createChoice(ChoiceVO choice) throws ChoiceException;
 
-    List<ChoiceVO> findListChoice();
+  List<ChoiceVO> findListChoice();
 
-    List<ChoiceVO> findChoiceByQuestionId(Long questionId);
+  List<ChoiceVO> findChoiceByQuestionId(Long questionId);
 
-    ChoiceVO findChoiceByChoiceId(Long choiceId);
-    // ChoiceVO findChoiceByQuestionIdAndPercentage(Long questionId,int percentage);
+  ChoiceVO findChoiceByChoiceId(Long choiceId);
+  // ChoiceVO findChoiceByQuestionIdAndPercentage(Long questionId,int percentage);
 }
